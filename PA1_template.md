@@ -83,7 +83,7 @@ activity_data$steps[nas] <- activity_data$steps.y[nas]
 activity_data <- activity_data[, c(1:3)]
 
 steps_date <- aggregate(steps ~ date, data = activity_data, FUN = sum)
-hist(steps_date$steps, xlab = "date", ylab = "steps", main = "Histogram afeter missing values",col = "orange")
+hist(steps_date$steps, xlab = "Steps per day", ylab = "Frequency", main = "Histogram afeter missing values",col = "orange")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
