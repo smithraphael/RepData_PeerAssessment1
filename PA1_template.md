@@ -7,6 +7,9 @@
 
 
 ```r
+library(lattice)
+library(ggplot2)
+
 setwd("C:\\Raphael\\estudos\\datasciencecoursera\\Reproducible Research\\Week2\\RepData_PeerAssessment1")
 unzip("activity.zip")
 activity_data = read.csv("activity.csv")
@@ -69,7 +72,7 @@ sum(is.na(activity_data))
 ## [1] 2304
 ```
 
-
+Replace Missing values (NAs) with average steps by 5-minute intervals
 
 ```r
 steps_int <- aggregate(steps ~ interval, data = activity_data, FUN = mean)
@@ -80,7 +83,7 @@ activity_data$steps[nas] <- activity_data$steps.y[nas]
 activity_data <- activity_data[, c(1:3)]
 
 steps_date <- aggregate(steps ~ date, data = activity_data, FUN = sum)
-hist(steps_date$steps, xlab = "date", ylab = "steps", col = "orange")
+hist(steps_date$steps, xlab = "date", ylab = "steps", main = "Histogram afeter missing values",col = "orange")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
@@ -110,24 +113,15 @@ activity_data$date <- as.Date(activity_data$date)
 
 daytype <- function(date) {
     if (weekdays(date) %in% c("sábado", "domingo")) {
-        "weekend"
+        "weekends"
     } else {
-        "weekday"
+        "weekdays"
     }
 }
 
 activity_data$daytype <- as.factor(sapply(activity_data$date, daytype))
 ```
 
-
-```r
-library(lattice)
-library(ggplot2)
-```
-
-```
-## Warning: package 'ggplot2' was built under R version 3.1.3
-```
 
 ```r
 mean_activity_missing = aggregate(steps ~ interval + daytype, data=activity_data, FUN="mean")
